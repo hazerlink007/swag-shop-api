@@ -2,6 +2,8 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+
+var cors = require('cors');
 var db = mongoose.connect('mongodb://localhost/swaag-shop');
 
 var Product = require('./model/product');
@@ -10,6 +12,7 @@ const wishlist = require('./model/wishlist');
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(cors());
 
 
 // function errorCtcher(savedItem,response){
@@ -42,7 +45,7 @@ app.post('/product', async function (request,response){
 app.get('/product', async (request,response)=>{
    try{
 
-    var products = await Product.find({"price":40});
+    var products = await Product.find({});
     response.send(products);
 
    } catch(error){
